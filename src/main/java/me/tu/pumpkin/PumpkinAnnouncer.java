@@ -23,7 +23,7 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
-@Plugin(id = "pumpkinannouncer", name = "PumpkinAnnouncer", version = "1.8", authors = {"Bro"})
+@Plugin(id = "pumpkinannouncer", name = "PumpkinAnnouncer", version = "1.8", authors = {"Pumpkingz"})
 public class PumpkinAnnouncer {
 
     private final ProxyServer server;
@@ -48,21 +48,17 @@ public class PumpkinAnnouncer {
 
         server.getCommandManager().register("pa", new PumpkinCommand());
 
-        // Usamos MiniMessage para que los colores se vean perrones en consola
-        net.kyori.adventure.text.minimessage.MiniMessage mm = net.kyori.adventure.text.minimessage.MiniMessage.miniMessage();
+        // Banner limpio en consola usando MiniMessage
+        var mm = MiniMessage.miniMessage();
+        var cs = server.getConsoleCommandSource();
 
-        // Mandamos el mensaje al ConsoleSource para que no salga el prefijo de la clase
-        invocationSource().sendMessage(mm.deserialize(""));
-        invocationSource().sendMessage(mm.deserialize("<gold><bold>Pumpkin    <gray>|  <white>Version: <yellow>1.8"));
-        invocationSource().sendMessage(mm.deserialize("<gold><bold>Announcer  <gray>|  <white>Desarrollador: <gold>Pumpkingz"));
-        invocationSource().sendMessage(mm.deserialize("<dark_gray>--------------------------------------------"));
-        invocationSource().sendMessage(mm.deserialize("<yellow> > <white>Estado: <green>Activo"));
-        invocationSource().sendMessage(mm.deserialize("<yellow> > <white>Anuncios cargados: <yellow>" + announcementMap.size()));
-        invocationSource().sendMessage(mm.deserialize(""));
-    }
-
-    private net.kyori.adventure.audience.Audience invocationSource() {
-        return server.getConsoleCommandSource();
+        cs.sendMessage(mm.deserialize(""));
+        cs.sendMessage(mm.deserialize("<gold><bold>Pumpkin    <gray>|  <white>Version: <yellow>1.8"));
+        cs.sendMessage(mm.deserialize("<gold><bold>Announcer  <gray>|  <white>Desarrollador: <gold>Pumpkingz"));
+        cs.sendMessage(mm.deserialize("<dark_gray>--------------------------------------------"));
+        cs.sendMessage(mm.deserialize("<yellow> > <white>Estado: <green>Activo"));
+        cs.sendMessage(mm.deserialize("<yellow> > <white>Anuncios cargados: <yellow>" + announcementMap.size()));
+        cs.sendMessage(mm.deserialize(""));
     }
 
     public void loadConfig() {
@@ -81,37 +77,38 @@ public class PumpkinAnnouncer {
 
         try {
             ConfigurationNode root = loader.load();
-
-            // Limpiamos antes de cargar
             announcementMap.clear();
             lang.clear();
 
-            // 1. Cargar Anuncios (Manejando la excepción de serialización)
             root.node("anuncios").childrenMap().forEach((key, node) -> {
                 try {
                     List<String> lines = node.getList(String.class);
                     if (lines != null) announcementMap.put(key.toString(), lines);
                 } catch (SerializationException e) {
-                    logger.warning("Error cargando el anuncio '" + key + "': " + e.getMessage());
+                    logger.warning("Error en anuncio '" + key + "': " + e.getMessage());
                 }
             });
 
-            // 2. Cargar Mensajes editables del sistema
             root.node("messages").childrenMap().forEach((key, node) -> {
                 String val = node.getString();
                 if (val != null) lang.put(key.toString(), val);
             });
 
-            // 3. Settings
             cooldown = root.node("settings", "cooldown-seconds").getInt(60);
 
         } catch (IOException e) {
-            logger.severe("Error al leer el archivo físico de la config, bro.");
+            logger.severe("Error al leer la config.");
         }
     }
 
     private void startAnnouncerTask() {
-        if (currentTask != null) currentTask.cancel();
+        // MATAMOS cualquier tarea vieja para evitar duplicados al hacer reload
+        if (currentTask != null) {
+            currentTask.cancel();
+        }
+
+        if (announcementMap.isEmpty()) return;
+
         currentTask = server.getScheduler().buildTask(this, () -> {
                     if (announcementMap.isEmpty()) return;
                     List<String> keys = new ArrayList<>(announcementMap.keySet());
@@ -122,12 +119,15 @@ public class PumpkinAnnouncer {
                 .schedule();
     }
 
+    // MÉTODO OPTIMIZADO: Manda el mensaje a todos de un solo golpe
     private void broadcast(List<String> lines) {
-        if (lines == null) return;
-        lines.forEach(line -> {
-            Component component = MiniMessage.miniMessage().deserialize(line);
-            server.getAllPlayers().forEach(p -> p.sendMessage(component));
-        });
+        if (lines == null || lines.isEmpty()) return;
+
+        var mm = MiniMessage.miniMessage();
+        for (String line : lines) {
+            // Enviamos al servidor completo (Audience), no jugador por jugador
+            server.sendMessage(mm.deserialize(line));
+        }
     }
 
     private String getMsg(String key, String def) {
@@ -138,8 +138,10 @@ public class PumpkinAnnouncer {
         @Override
         public void execute(Invocation invocation) {
             String[] args = invocation.arguments();
+            var mm = MiniMessage.miniMessage();
+
             if (args.length == 0) {
-                invocation.source().sendMessage(MiniMessage.miniMessage().deserialize(getMsg("help", "<gold>Usa /pa reload, list o test")));
+                invocation.source().sendMessage(mm.deserialize(getMsg("help", "<gold>Usa /pa reload, list o test")));
                 return;
             }
 
@@ -147,12 +149,12 @@ public class PumpkinAnnouncer {
                 case "reload":
                     loadConfig();
                     startAnnouncerTask();
-                    invocation.source().sendMessage(MiniMessage.miniMessage().deserialize(getMsg("reload-success", "<green>¡Todo recargado al cien!")));
+                    invocation.source().sendMessage(mm.deserialize(getMsg("reload-success", "<green>¡Recargado al cien!")));
                     break;
                 case "list":
-                    invocation.source().sendMessage(MiniMessage.miniMessage().deserialize(getMsg("list-header", "<gold>Anuncios disponibles:")));
+                    invocation.source().sendMessage(mm.deserialize(getMsg("list-header", "<gold>Anuncios:")));
                     announcementMap.keySet().forEach(id ->
-                            invocation.source().sendMessage(MiniMessage.miniMessage().deserialize("<yellow>» <white>" + id))
+                            invocation.source().sendMessage(mm.deserialize("<yellow>» <white>" + id))
                     );
                     break;
                 case "test":
@@ -161,7 +163,7 @@ public class PumpkinAnnouncer {
                     if (announcementMap.containsKey(id)) {
                         broadcast(announcementMap.get(id));
                     } else {
-                        invocation.source().sendMessage(MiniMessage.miniMessage().deserialize(getMsg("id-not-found", "<red>Ese anuncio no existe.")));
+                        invocation.source().sendMessage(mm.deserialize(getMsg("id-not-found", "<red>No existe.")));
                     }
                     break;
             }
@@ -170,3 +172,4 @@ public class PumpkinAnnouncer {
         public boolean hasPermission(Invocation invocation) { return invocation.source().hasPermission("pumpkin.admin"); }
     }
 }
+
