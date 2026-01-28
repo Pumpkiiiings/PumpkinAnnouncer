@@ -48,7 +48,6 @@ public class PumpkinAnnouncer {
 
         server.getCommandManager().register("pa", new PumpkinCommand());
 
-        // Banner limpio en consola usando MiniMessage
         var mm = MiniMessage.miniMessage();
         var cs = server.getConsoleCommandSource();
 
@@ -102,10 +101,7 @@ public class PumpkinAnnouncer {
     }
 
     private void startAnnouncerTask() {
-        // MATAMOS cualquier tarea vieja para evitar duplicados al hacer reload
-        if (currentTask != null) {
-            currentTask.cancel();
-        }
+        if (currentTask != null) currentTask.cancel();
 
         if (announcementMap.isEmpty()) return;
 
@@ -119,14 +115,15 @@ public class PumpkinAnnouncer {
                 .schedule();
     }
 
-    // MÉTODO OPTIMIZADO: Manda el mensaje a todos de un solo golpe
+    // EL ARREGLO ESTÁ AQUÍ, BRO:
     private void broadcast(List<String> lines) {
         if (lines == null || lines.isEmpty()) return;
 
         var mm = MiniMessage.miniMessage();
         for (String line : lines) {
-            // Enviamos al servidor completo (Audience), no jugador por jugador
-            server.sendMessage(mm.deserialize(line));
+            Component component = mm.deserialize(line);
+            // Solo mandamos a los jugadores, ignorando la consola
+            server.getAllPlayers().forEach(player -> player.sendMessage(component));
         }
     }
 
