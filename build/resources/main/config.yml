@@ -1,0 +1,19 @@
+settings:
+  cooldown-seconds: 60
+
+messages:
+  help: "<gradient:orange:gold><bold>PumpkinAnnouncer</bold></gradient>\n<gray>» <yellow>/pa reload <dark_gray>- <white>Recarga\n<gray>» <yellow>/pa list <dark_gray>- <white>Ver IDs\n<gray>» <yellow>/pa test <id> <dark_gray>- <white>Probar"
+  reload-success: "<green>¡Listo, bro! Todo al cien."
+  list-header: "<gold><bold>Anuncios en el sistema:</bold></gold>"
+  id-not-found: "<red>Ese anuncio no existe, checa tu config."
+
+anuncios:
+  bienvenida:
+    - "<strikethrough><gray>      </gray></strikethrough> <gradient:gold:yellow>BIENVENIDO</gradient> <strikethrough><gray>      </gray></strikethrough>"
+    - ""
+    - "<white>¡Qué onda bro! Pásatela chido."
+    - "<white>No olvides portarte bien."
+    - ""
+    - "<strikethrough><gray>                              </gray></strikethrough>"
+  tienda:
+    - "<green>[TIENDA]</green> <white>Usa el código <yellow>PUMPKIN</yellow> para descuento."
