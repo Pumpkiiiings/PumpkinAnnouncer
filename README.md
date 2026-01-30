@@ -34,16 +34,38 @@ El archivo de configuración es lo mas simple.
 
 ```yaml
 settings:
-  cooldown-seconds: 60  # Intervalo de rotación entre anuncios
+  cooldown-seconds: 60
 
 messages:
-  help: "<gold><bold>PumpkinAnnouncer</bold></gold> \n <gray>Usa /pa reload, list o test"
-  reload-success: "<green>Configuración recargada exitosamente."
-  id-not-found: "<red>Error: El ID especificado no existe."
+  help: "<gradient:gold:yellow><bold>PumpkinAnnouncer</bold></gradient>\n<gray>» <yellow>/pa reload <dark_gray>- <white>Recarga\n<gray>» <yellow>/pa list <dark_gray>- <white>Ver IDs\n<gray>» <yellow>/pa test <id> <dark_gray>- <white>Probar"
+  reload-success: "<green>¡Listo, bro! Todo al cien."
+  list-header: "<gold><bold>Anuncios en el sistema:</bold></gold>"
+  id-not-found: "<red>Ese anuncio no existe, checa tu config."
 
 anuncios:
-  tienda:
-    - "<green>==================================</green>"
-    - "  <yellow>Visita nuestra tienda oficial</yellow>"
-    - "  <white>tienda.pumpkingz.net</white>"
-    - "<green>==================================</green>"
+  discord:
+    servers: ["global"]
+    lines:
+      - "            <color:#A0C4FF><bold>DISCORD</bold>"
+      - "<white>"
+      - " <white>¡Únete a nuestra comunidad oficial!"
+      - " <white>Link: <click:open_url:'https://discord.gg/VVCnuympkD'><hover:show_text:'<gray>¡Haz clic para entrar, bro!'><underlined><color:#A0C4FF>discord.gg/VVCnuympkD</color></underlined></hover></click>"
+      - " <gray>» <white>Sorteos, soporte y novedades diarias."
+ tienda:
+    servers: ["global"]
+    lines:
+      - "            <color:#FDFD96><bold>TIENDA OFICIAL</bold>"
+      - "<white>"
+      - " <white>¡Aprovecha nuestras ofertas de temporada!"
+      - " <white>Obtén hasta un <color:#FFB7B2><bold>30% de descuento</bold></color> en rangos."
+      - " <white>Link: <click:open_url:'https://tienda.tuservidor.com'><hover:show_text:'<gray>¡Haz clic para ver la tienda, bro!'><underlined><color:#FDFD96>tienda.tuservidor.com</color></underlined></hover></click>"
+      - " <gray>» <white>Apoya al servidor y obtén beneficios únicos."
+survival_info:
+    servers: ["survival"]
+    lines:
+      - "            <color:#C1E1C1><bold>SURVIVAL</bold>"
+      - "<white>"
+      - " <white>¡Bienvenido a la aventura, bro! Recuerda que"
+      - " <white>puedes proteger tu zona usando el <color:#C1E1C1><bold>/claim</bold></color>."
+      - " <gray>» <white>Consulta las guías en nuestro <color:#A0C4FF>Discord</color>."
+
