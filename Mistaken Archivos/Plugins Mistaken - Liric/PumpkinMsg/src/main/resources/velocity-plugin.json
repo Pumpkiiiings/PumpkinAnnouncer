@@ -1,0 +1,10 @@
+{
+  "id": "pumpkinmsg",
+  "name": "PumpkinMsg",
+  "version": "${version}",
+  "description": "Sistema de mensajería privada formal y profesional para redes Velocity",
+  "authors": [
+    "Pumpkingz"
+  ],
+  "main": "com.pumpkin.msg.PumpkinMsg"
+}

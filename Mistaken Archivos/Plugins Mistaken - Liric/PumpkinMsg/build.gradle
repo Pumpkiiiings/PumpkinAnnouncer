@@ -1,0 +1,62 @@
+plugins {
+    id 'java'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
+    id 'org.jetbrains.kotlin.jvm'
+}
+
+group = 'com.pumpkin.msg'
+version = '1.0'
+
+// Define el nombre base del archivo JAR
+base {
+    archivesName = 'PumpkinMsg'
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        name = 'papermc'
+        url = 'https://repo.papermc.io/repository/maven-public/'
+    }
+    // Repositorio de LuckPerms
+    maven { url "https://repo.lucko.me/" }
+}
+
+dependencies {
+    // API de Velocity
+    compileOnly 'com.velocitypowered:velocity-api:3.3.0-SNAPSHOT'
+    annotationProcessor 'com.velocitypowered:velocity-api:3.3.0-SNAPSHOT'
+
+    // Adventure y MiniMessage
+    compileOnly 'net.kyori:adventure-text-minimessage:4.17.0'
+    compileOnly 'net.kyori:adventure-api:4.17.0'
+
+    // API de LuckPerms
+    compileOnly "net.luckperms:api:5.4"
+
+    // TOML y Kotlin
+    implementation 'com.moandjiezana.toml:toml4j:0.7.2'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+}
+
+def targetJavaVersion = 17
+java {
+    def commonJavaVersion = JavaVersion.toVersion(targetJavaVersion)
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    if (JavaVersion.current().isJava10Compatible()) {
+        options.release.set(targetJavaVersion)
+    }
+}
+
+shadowJar {
+    archiveFileName.set("PumpkinMsg-${project.version}.jar")
+    relocate 'com.moandjiezana.toml', 'com.pumpkin.msg.libs.toml'
+}
+
+build.dependsOn shadowJar
+kotlin {
+    jvmToolchain(17)
+}

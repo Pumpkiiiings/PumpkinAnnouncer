@@ -1,0 +1,46 @@
+# ==========================================================
+# PumpkinMsg - Configuración
+# ==========================================================
+
+[messages]
+# Mensajes de Error y Uso
+usage = "<#FF9500>PumpkinMsg <#5C6370>» <#E06C75>Uso: /msg <jugador> <mensaje>"
+ignore-usage = "<#FF9500>PumpkinMsg <#5C6370>» <#E06C75>Uso correcto: /ignore <jugador>"
+reply-usage = "<#FF9500>PumpkinMsg <#5C6370>» <#E06C75>Uso: /reply <mensaje>"
+no-reply-target = "<#FF9500>PumpkinMsg <#5C6370>» <#E06C75>No tienes a nadie a quien responder."
+player-offline = "<#FF9500>PumpkinMsg <#5C6370>» <#E06C75>Ese jugador está fuera de la red."
+no-permission = "<#E06C75>No tienes los permisos necesarios para esto."
+reload-success = "<#FF9500>PumpkinMsg <#5C6370>» <#98C379>¡Configuración recargada con éxito!"
+
+# Restricciones
+cannot-msg-self = "<#FF9500>PumpkinMsg <#5C6370>» <#E06C75>No puedes hablar contigo mismo, bro."
+cannot-ignore-self = "<#FF9500>PumpkinMsg <#5C6370>» <#E06C75>No puedes ignorarte a ti mismo."
+cannot-reply-self = "<#FF9500>PumpkinMsg <#5C6370>» <#E06C75>Error de respuesta: Objetivo inválido."
+
+# Privacidad y Bloqueos
+sender-toggled-off = "<#FF9500>PumpkinMsg <#5C6370>» <#E06C75>Tienes tus mensajes desactivados."
+target-toggled-off = "<#FF9500>PumpkinMsg <#5C6370>» <#D19A66>El receptor tiene los mensajes privados apagados."
+player-ignoring-you = "<#FF9500>PumpkinMsg <#5C6370>» <#E06C75>No puedes contactar a este usuario."
+ignored-player = "<#FF9500>PumpkinMsg <#5C6370>» <#98C379>Ahora ignoras a <#61AFEF><target><#98C379>."
+unignored-player = "<#FF9500>PumpkinMsg <#5C6370>» <#E5C07B>Has dejado de ignorar a <#61AFEF><target><#E5C07B>."
+toggle-on = "<#FF9500>PumpkinMsg <#5C6370>» <#98C379>Mensajes privados activados."
+toggle-off = "<#FF9500>PumpkinMsg <#5C6370>» <#E06C75>Mensajes privados desactivados."
+
+# Staff / SocialSpy
+spy-enabled = "<#C678DD>[Staff Spy] <#5C6370>» <#98C379>Modo Global activo."
+spy-disabled = "<#C678DD>[Staff Spy] <#5C6370>» <#E06C75>Modo Global desactivado."
+spy-target-set = "<#C678DD>[Staff Spy] <#5C6370>» <#61AFEF>Vigilando a: <white><target>."
+cmdspy-enabled = "<#C678DD>[Cmd Spy] <#5C6370>» <#98C379>Modo de espía activado <#E5C07B>(<mode>)."
+cmdspy-disabled = "<#C678DD>[Cmd Spy] <#5C6370>» <#E06C75>Espionaje de comandos desactivado."
+
+[format]
+# Formatos con degradados suaves o colores contrastados
+# Tú -> Destinatario
+sender = "<#ABB2BF>[<#FF9500>Tú <#5C6370>-> <#61AFEF><target><#ABB2BF>] <white><message>"
+# Remitente -> Tú
+receiver = "<#ABB2BF>[<#61AFEF><sender> <#5C6370>-> <#FF9500>Tú<#ABB2BF>] <white><message>"
+# Formato Staff
+# Formato Staff (Le agregamos los prefijos de LuckPerms a los lados)
+spy = "<#C678DD>[Spy] <sender_prefix><#61AFEF><sender> <#5C6370>-> <target_prefix><#61AFEF><target><#5C6370>: <#D19A66><message>"
+# Formato del Command Spy
+cmdspy = "<#C678DD>[Cmd Spy] <player_prefix><#61AFEF><player> <#5C6370>usó <white>/<command> <#5C6370>en <#E5C07B><server>"
