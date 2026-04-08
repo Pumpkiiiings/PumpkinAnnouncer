@@ -4,7 +4,7 @@ plugins {
 }
 
 group = 'me.tu.pumpkin'
-version = '1.7'
+version = '2.1'
 
 repositories {
     mavenCentral()
