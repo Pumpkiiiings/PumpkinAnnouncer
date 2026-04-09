@@ -1,4 +1,4 @@
-package pumpkin.anuncios.utils;
+package pumpkin.anuncios.core.utils;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;

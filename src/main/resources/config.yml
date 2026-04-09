@@ -3,32 +3,45 @@ settings:
 
 messages:
   help: "<gradient:gold:yellow><bold>PumpkinAnnouncer</bold></gradient>\n<gray>» <yellow>/pa reload <dark_gray>- <white>Recarga\n<gray>» <yellow>/pa list <dark_gray>- <white>Ver IDs\n<gray>» <yellow>/pa test <id> <dark_gray>- <white>Probar"
-  reload-success: "<green>¡Listo, bro! Todo al cien."
+  reload-success: "<green>¡Listo! Todo al cien."
   list-header: "<gold><bold>Anuncios en el sistema:</bold></gold>"
   id-not-found: "<red>Ese anuncio no existe, checa tu config."
+
+# Lista de sonidos https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Sound.html
 
 anuncios:
   discord:
     servers: ["global"]
+    sound: "ENTITY_EXPERIENCE_ORB_PICKUP"
+    actionbar:
+      enabled: true
+      text: "<color:#A0C4FF><bold>¡Únete a nuestro servidor de Discord!</bold></color>"
+      duration-seconds: 10
+    bossbar:
+      enabled: true
+      text: "<color:#A0C4FF><bold>DISCORD OFICIAL</bold></color>"
+      color: "BLUE" # Opciones: PINK, BLUE, RED, GREEN, YELLOW, PURPLE, WHITE
+      style: "SOLID" # Opciones: SOLID, SEGMENTED_6, SEGMENTED_10, SEGMENTED_12, SEGMENTED_20
+      duration-seconds: 10
+      deplete: true
     lines:
       - "[center]<color:#A0C4FF><bold>DISCORD</bold>"
       - ""
       - "[center]<white>¡Únete a nuestra comunidad oficial!"
       - "[center]<white>Link: <click:open_url:'https://discord.gg/VVCnuympkD'><hover:show_text:'<gray>¡Haz clic para entrar, bro!'><underlined><color:#A0C4FF>discord.gg/VVCnuympkD</color></underlined></hover></click>"
       - "[center]<gray>» <white>Sorteos, soporte y novedades diarias."
+
+  # Ejemplo de anuncio normal (sin bossbar ni sonido)
   seguridad:
     servers: ["global"]
+    sound: ""
+    actionbar:
+      enabled: false
+    bossbar:
+      enabled: false
     lines:
       - "[center]<color:#FFADAD><bold>SEGURIDAD</bold>"
       - ""
       - "[center]<white>Por su seguridad, le recomendamos <color:#FFD6A5><bold>no reutilizar</bold></color>"
       - "[center]<white>sus credenciales en diferentes servidores."
       - "[center]<gray>» <white>Proteja su cuenta utilizando contraseñas únicas."
-  reportes:
-    servers: ["global"]
-    lines:
-      - "[center]<color:#CAFFBF><bold>REPORTES</bold>"
-      - ""
-      - "[center]<white>¿Ha presenciado alguna conducta inapropiada?"
-      - "[center]<white>Utilice el comando <color:#CAFFBF><bold>/report <jugador></bold></color> para informar."
-      - "[center]<gray>» <white>Nuestro staff revisará su caso lo mas antes posible."

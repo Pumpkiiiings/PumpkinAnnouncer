@@ -3,8 +3,8 @@ plugins {
     id 'com.github.johnrengelman.shadow' version '8.1.1'
 }
 
-group = 'me.tu.pumpkin'
-version = '2.1'
+group = 'pumpkin.anuncios'
+version = '2.2'
 
 repositories {
     mavenCentral()
@@ -14,11 +14,8 @@ repositories {
 dependencies {
     compileOnly 'com.velocitypowered:velocity-api:3.3.0-SNAPSHOT'
     annotationProcessor 'com.velocitypowered:velocity-api:3.3.0-SNAPSHOT'
-
-    // Cambiamos a YAML, esta versión está en el repo de Paper fija
-    compileOnly 'org.spongepowered:configurate-yaml:4.1.2'
-
-    compileOnly 'net.kyori:adventure-text-minimessage:4.17.0'
+    compileOnly 'io.papermc.paper:paper-api:1.19.4-R0.1-SNAPSHOT'
+    implementation 'org.spongepowered:configurate-yaml:4.1.2'
 }
 
 java {
@@ -30,6 +27,11 @@ java {
 tasks {
     shadowJar {
         archiveClassifier.set('')
+
+        // PRÁCTICA PRO: Reubicar librerías.
+        // Si otro plugin usa un Configurate antiguo, el tuyo no se romperá ni causará errores.
+        relocate 'org.spongepowered.configurate', 'pumpkin.anuncios.libs.configurate'
+        relocate 'io.leangen.geantyref', 'pumpkin.anuncios.libs.geantyref'
     }
 }
 

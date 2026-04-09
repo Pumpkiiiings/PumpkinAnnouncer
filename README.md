@@ -1,16 +1,22 @@
-# 🎃 PumpkinAnnouncer v2.1
+# 🎃 PumpkinAnnouncer v2.2
 
-¡El sistema definitivo de anuncios automáticos para tu red de **Velocity**!
-PumpkinAnnouncer te permite enviar mensajes programados a toda tu red o a servidores específicos, con soporte total para colores HEX, gradientes, eventos click/hover y **centrado automático perfecto**.
+![Velocity](https://img.shields.io/badge/Velocity-Ready-blue?style=for-the-badge)
+![Paper](https://img.shields.io/badge/Paper-Ready-white?style=for-the-badge)
+![Java](https://img.shields.io/badge/Java-17+-orange?style=for-the-badge&logo=java)
+![Version](https://img.shields.io/badge/Version-v2.2-success?style=for-the-badge)
+
+¡El sistema definitivo de anuncios automáticos, ahora nativo para servidores **Paper** y redes **Velocity** en un solo archivo!
+PumpkinAnnouncer te permite programar mensajes inmersivos con soporte total para el chat, ActionBars, BossBars y Sonidos.
 
 ## ✨ Características
 
-- ⚡ **Optimizado para Velocity:** Ligero y asíncrono, no causará lag en tu proxy.
-- 🎨 **Soporte MiniMessage:** Usa colores HEX, gradientes, negritas y más.
-- 🎯 **Multi-Servidor:** Envía anuncios a toda la red (`global`) o solo a servidores específicos (ej. `["lobby", "survival"]`).
-- 📏 **Centrado Automático:** Usa la etiqueta `[center]` al inicio de una línea para centrarla matemáticamente en el chat de Minecraft.
-- 🖱️ **Interactividad:** Soporta `<click>` y `<hover>` para enlaces o textos emergentes.
-- ⌨️ **Autocompletado (Tab-Complete):** Autocompletado inteligente para comandos y nombres de anuncios.
+- 🌐 **Multiplataforma (1 Solo Archivo):** Funciona perfectamente si lo pones en la carpeta `plugins` de tu servidor Paper o en tu proxy Velocity. ¡Él sabrá qué hacer!
+- 🎨 **Colores Universales:** Puedes mezclar códigos Legacy (`&a&l`), BungeeHex (`&#FF0000`) y MiniMessage (`<gradient:red:blue>`) en la misma línea. ¡El plugin traduce todo mágicamente!
+- 🪧 **BossBars y ActionBars:** Llama la atención de tus jugadores mostrando barras de jefe temporales y textos sobre la barra de vida, acompañados de sonidos personalizados.
+- 🎯 **Multi-Servidor (Velocity):** Envía anuncios a toda la red (`global`) o solo a servidores específicos (ej. `["lobby", "survival"]`).
+- 📏 **Centrado Matemático:** Usa la etiqueta `[center]` al inicio de cualquier línea para centrarla perfectamente en el chat de Minecraft, ignorando inteligentemente los códigos de color.
+- 🖱️ **Interactividad:** Soporta etiquetas `<click>` y `<hover>` para enlaces o textos emergentes en el chat.
+- ⌨️ **Autocompletado Pro:** Presiona `TAB` en el comando `/pa test` y el plugin autocompletará los IDs de tus anuncios creados.
 
 ---
 

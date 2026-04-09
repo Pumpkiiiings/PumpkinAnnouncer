@@ -1,0 +1,10 @@
+name: PumpkinAnnouncer
+version: '2.2'
+main: pumpkin.anuncios.paper.PumpkinPaper
+description: Anuncios multiplataforma para Paper y Velocity
+api-version: '1.19'
+authors: [ Pumpkingz ]
+permissions:
+  pumpkin.admin:
+    description: Permiso admin para PumpkinAnnouncer
+    default: op
