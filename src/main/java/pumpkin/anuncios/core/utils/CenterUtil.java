@@ -5,7 +5,7 @@ import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 
 public class CenterUtil {
 
-    private final static int CENTER_PX = 154; // Píxeles de la mitad de la pantalla de chat de Minecraft
+    private final static int CENTER_PX = 154;
 
     public static Component centerComponent(Component component) {
         String rawText = PlainTextComponentSerializer.plainText().serialize(component);

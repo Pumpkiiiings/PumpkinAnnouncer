@@ -19,9 +19,6 @@ public class PumpkinPaper extends JavaPlugin implements PumpkinPlatform {
         AnnouncerCore core = new AnnouncerCore(this);
         core.loadConfig();
         core.startTask();
-
-        // INYECCIÓN PRO: Registramos el comando directamente al CommandMap
-        // El "pumpkin" es un fallback prefix por si otro plugin tiene el comando /pa
         getServer().getCommandMap().register("pumpkin", new PaperCommand(core));
 
         getLogger().info("¡Cargado correctamente en modo Paper!");
@@ -38,12 +35,10 @@ public class PumpkinPaper extends JavaPlugin implements PumpkinPlatform {
         taskId = Bukkit.getScheduler().runTaskTimerAsynchronously(this, r, 0L, secs * 20L).getTaskId();
     }
 
-    // --- NUEVO: Para ocultar la BossBar después del tiempo configurado ---
     @Override public void scheduleDelayedTask(Runnable task, int delaySeconds) {
         Bukkit.getScheduler().runTaskLaterAsynchronously(this, task, delaySeconds * 20L);
     }
 
-    // (Casteo añadido por seguridad para evitar advertencias de IDE)
     @Override public Collection<? extends Audience> getOnlinePlayers() {
         return (Collection<? extends Audience>) Bukkit.getOnlinePlayers();
     }

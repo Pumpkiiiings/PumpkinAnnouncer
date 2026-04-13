@@ -52,7 +52,6 @@ public class PumpkinVelocity implements PumpkinPlatform {
         task = server.getScheduler().buildTask(this, r).repeat(secs, TimeUnit.SECONDS).schedule();
     }
 
-    // --- NUEVO: Para ocultar la BossBar después del tiempo configurado ---
     @Override public void scheduleDelayedTask(Runnable task, int delaySeconds) {
         server.getScheduler().buildTask(this, task).delay(delaySeconds, TimeUnit.SECONDS).schedule();
     }

@@ -53,7 +53,6 @@ public class AnnouncerCore {
                     List<String> lines = node.node("lines").getList(String.class);
                     String sound = node.node("sound").getString("");
 
-                    // Propiedades del ActionBar
                     boolean abEnabled = false;
                     String abText = "";
                     int abDuration = 5;
@@ -68,7 +67,6 @@ public class AnnouncerCore {
                     }
                     Announcement.ActionBarConfig abConfig = new Announcement.ActionBarConfig(abEnabled, abText, abDuration);
 
-                    // Propiedades del BossBar
                     boolean bbEnabled = node.node("bossbar", "enabled").getBoolean(false);
                     String bbText = node.node("bossbar", "text").getString("");
                     String bbColor = node.node("bossbar", "color").getString("BLUE");
@@ -108,7 +106,6 @@ public class AnnouncerCore {
     public void broadcast(Announcement ann) {
         if (ann == null) return;
 
-        // 1. Filtrar los jugadores que deben ver el anuncio (optimización PRO)
         List<Audience> targets = new ArrayList<>();
         platform.getOnlinePlayers().forEach(player -> {
             boolean isGlobal = ann.servers().stream().anyMatch(s -> s.equalsIgnoreCase("global"));
@@ -119,7 +116,6 @@ public class AnnouncerCore {
 
         if (targets.isEmpty()) return;
 
-        // 2. Preparamos Chat
         List<Component> chatMessages = new ArrayList<>();
         if (ann.lines() != null && !ann.lines().isEmpty()) {
             for (String line : ann.lines()) {
@@ -132,7 +128,6 @@ public class AnnouncerCore {
             }
         }
 
-        // 3. Preparamos Sonido
         Sound soundObj = null;
         if (ann.sound() != null && !ann.sound().isEmpty()) {
             String soundKey = ann.sound().toLowerCase();
@@ -144,7 +139,6 @@ public class AnnouncerCore {
             } catch (Exception ignored) {}
         }
 
-        // 4. Preparamos ActionBar y BossBar
         final Component finalActionBar = (ann.actionbar().enabled() && !ann.actionbar().text().isEmpty())
                 ? parseMsg(ann.actionbar().text()) : null;
 
@@ -161,7 +155,6 @@ public class AnnouncerCore {
         final BossBar finalBossBar = tempBossBar;
         final Sound finalSound = soundObj;
 
-        // 5. Enviar inicial
         targets.forEach(player -> {
             if (!chatMessages.isEmpty()) chatMessages.forEach(player::sendMessage);
             if (finalSound != null) player.playSound(finalSound);
@@ -169,15 +162,12 @@ public class AnnouncerCore {
             if (finalBossBar != null) player.showBossBar(finalBossBar);
         });
 
-        // 6. Tareas programadas para persistencia del Actionbar
         if (finalActionBar != null && ann.actionbar().durationSeconds() > 1) {
-            // Reenvíamos el actionbar cada segundo para que no parpadee ni desaparezca
             for (int i = 1; i < ann.actionbar().durationSeconds(); i++) {
                 platform.scheduleDelayedTask(() -> targets.forEach(p -> p.sendActionBar(finalActionBar)), i);
             }
         }
 
-        // 7. Tareas programadas para el vaciado (deplete) y ocultado de la BossBar
         if (finalBossBar != null) {
             int duration = ann.bossbar().durationSeconds();
             boolean deplete = ann.bossbar().deplete();
@@ -185,13 +175,11 @@ public class AnnouncerCore {
             for (int i = 1; i <= duration; i++) {
                 final int elapsed = i;
                 platform.scheduleDelayedTask(() -> {
-                    // Animación de ir bajando
                     if (deplete) {
                         float remaining = 1.0f - ((float) elapsed / duration);
                         finalBossBar.progress(Math.max(0.0f, remaining));
                     }
 
-                    // Al llegar al último segundo, la ocultamos a todos
                     if (elapsed == duration) {
                         targets.forEach(p -> p.hideBossBar(finalBossBar));
                     }
@@ -200,7 +188,6 @@ public class AnnouncerCore {
         }
     }
 
-    // -- LÓGICA DE COMANDOS --
     public void executeCommand(Audience sender, String[] args) {
         if (args.length == 0) {
             sender.sendMessage(parseMsg(lang.getOrDefault("help", "&6Usa /pa reload, list o test <anuncio>")));
