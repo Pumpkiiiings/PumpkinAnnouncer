@@ -2,37 +2,36 @@ settings:
   cooldown-seconds: 60
 
 messages:
-  help: "<gradient:gold:yellow><bold>PumpkinAnnouncer</bold></gradient>\n<gray>» <yellow>/pa reload <dark_gray>- <white>Recarga\n<gray>» <yellow>/pa list <dark_gray>- <white>Ver IDs\n<gray>» <yellow>/pa test <id> <dark_gray>- <white>Probar"
-  reload-success: "<green>¡Listo! Todo al cien."
-  list-header: "<gold><bold>Anuncios en el sistema:</bold></gold>"
-  id-not-found: "<red>Ese anuncio no existe, checa tu config."
+  help: "<gradient:gold:yellow><bold>PumpkinAnnouncer</bold></gradient>\n<gray>» <yellow>/pa reload <dark_gray>- <white>Reload settings\n<gray>» <yellow>/pa list <dark_gray>- <white>View all IDs\n<gray>» <yellow>/pa test <id> <dark_gray>- <white>Preview an announcement"
+  reload-success: "<green>Reload complete! Everything is running smoothly."
+  list-header: "<gold><bold>Currently Loaded Announcements:</bold></gold>"
+  id-not-found: "<red>That announcement ID doesn't exist. Please check your config."
 
-# Lista de sonidos https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Sound.html
+# Sound List: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Sound.html
 
-anuncios:
+announcements:
   discord:
     servers: ["global"]
     sound: "ENTITY_EXPERIENCE_ORB_PICKUP"
     actionbar:
       enabled: true
-      text: "<color:#A0C4FF><bold>¡Únete a nuestro servidor de Discord!</bold></color>"
+      text: "<color:#A0C4FF><bold>Join our official Discord community!</bold></color>"
       duration-seconds: 10
     bossbar:
       enabled: true
-      text: "<color:#A0C4FF><bold>DISCORD OFICIAL</bold></color>"
-      color: "BLUE" # Opciones: PINK, BLUE, RED, GREEN, YELLOW, PURPLE, WHITE
-      style: "SOLID" # Opciones: SOLID, SEGMENTED_6, SEGMENTED_10, SEGMENTED_12, SEGMENTED_20
+      text: "<color:#A0C4FF><bold>OFFICIAL DISCORD</bold></color>"
+      color: "BLUE" # Options: PINK, BLUE, RED, GREEN, YELLOW, PURPLE, WHITE
+      style: "SOLID" # Options: SOLID, SEGMENTED_6, SEGMENTED_10, SEGMENTED_12, SEGMENTED_20
       duration-seconds: 10
       deplete: true
     lines:
       - "[center]<color:#A0C4FF><bold>DISCORD</bold>"
       - ""
-      - "[center]<white>¡Únete a nuestra comunidad oficial!"
-      - "[center]<white>Link: <click:open_url:'https://discord.gg/VVCnuympkD'><hover:show_text:'<gray>¡Haz clic para entrar, bro!'><underlined><color:#A0C4FF>discord.gg/VVCnuympkD</color></underlined></hover></click>"
-      - "[center]<gray>» <white>Sorteos, soporte y novedades diarias."
+      - "[center]<white>Come and be part of our community!"
+      - "[center]<white>Link: <click:open_url:'your_link'><hover:show_text:'<gray>Click here to join!'><underlined><color:#A0C4FF>your_link</color></underlined></hover></click>"
+      - "[center]<gray>» <white>Giveaways, support, and daily updates."
 
-  # Ejemplo de anuncio normal (sin bossbar ni sonido)
-  seguridad:
+  security:
     servers: ["global"]
     sound: ""
     actionbar:
@@ -40,8 +39,8 @@ anuncios:
     bossbar:
       enabled: false
     lines:
-      - "[center]<color:#FFADAD><bold>SEGURIDAD</bold>"
+      - "[center]<color:#FFADAD><bold>SECURITY TIP</bold>"
       - ""
-      - "[center]<white>Por su seguridad, le recomendamos <color:#FFD6A5><bold>no reutilizar</bold></color>"
-      - "[center]<white>sus credenciales en diferentes servidores."
-      - "[center]<gray>» <white>Proteja su cuenta utilizando contraseñas únicas."
+      - "[center]<white>To keep your account safe, we recommend <color:#FFD6A5><bold>avoiding</bold></color>"
+      - "[center]<white>the use of the same password across different servers."
+      - "[center]<gray>» <white>Protect your progress by using unique passwords."
