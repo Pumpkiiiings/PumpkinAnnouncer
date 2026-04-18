@@ -10,6 +10,7 @@ import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.yaml.YamlConfigurationLoader;
 import pumpkin.anuncios.core.utils.CenterUtil;
 import pumpkin.anuncios.core.utils.ColorUtil;
+import pumpkin.anuncios.core.utils.UpdateChecker;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,6 +21,12 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class AnnouncerCore {
+
+    public static final String VERSION = "2.3";
+    private final String MODRINTH_SLUG = "pumpkinannouncer";
+    private String latestVersion = null;
+    private String releaseName = null;
+
     private final PumpkinPlatform platform;
     private final Map<String, Announcement> announcementMap = new HashMap<>();
     private final Map<String, String> lang = new HashMap<>();
@@ -29,6 +36,26 @@ public class AnnouncerCore {
 
     public AnnouncerCore(PumpkinPlatform platform) {
         this.platform = platform;
+    }
+
+    public void initUpdateChecker() {
+        new UpdateChecker(VERSION, MODRINTH_SLUG).check().thenAccept(result -> {
+            if (result != null) {
+                latestVersion = result[0];
+                releaseName = result[1];
+                platform.getPluginLogger().info("A new update is available: v" + latestVersion);
+            }
+        });
+    }
+
+    // --- NUEVO: AVISAR AL JUGADOR ---
+    public void notifyUpdate(Audience player) {
+        if (latestVersion != null) {
+            player.sendMessage(mm.deserialize("\n<gradient:gold:yellow><bold>🎃 PumpkinAnnouncer Update Available!</bold></gradient>"));
+            player.sendMessage(mm.deserialize("<gray>Current version: <red>" + VERSION + " <gray>| New version: <green>" + latestVersion));
+            player.sendMessage(mm.deserialize("<yellow>What's new:</yellow> <white>" + releaseName));
+            player.sendMessage(mm.deserialize("<click:open_url:'https://modrinth.com/plugin/" + MODRINTH_SLUG + "'><hover:show_text:'<green>Click here to download the new version!'><yellow><bold>👉 [CLICK HERE TO DOWNLOAD] 👈</bold></yellow></hover></click>\n"));
+        }
     }
 
     public void loadConfig() {
@@ -47,9 +74,10 @@ public class AnnouncerCore {
             announcementMap.clear();
             lang.clear();
 
-            root.node("anuncios").childrenMap().forEach((key, node) -> {
+            root.node("announcements").childrenMap().forEach((key, node) -> {
                 try {
                     List<String> servers = node.node("servers").getList(String.class, List.of("global"));
+                    List<String> worlds = node.node("worlds").getList(String.class, List.of("global"));
                     List<String> lines = node.node("lines").getList(String.class);
                     String sound = node.node("sound").getString("");
 
@@ -57,11 +85,11 @@ public class AnnouncerCore {
                     String abText = "";
                     int abDuration = 5;
 
-                    if (node.node("actionbar").isMap()) { // Nuevo formato
+                    if (node.node("actionbar").isMap()) {
                         abEnabled = node.node("actionbar", "enabled").getBoolean(false);
                         abText = node.node("actionbar", "text").getString("");
                         abDuration = node.node("actionbar", "duration-seconds").getInt(5);
-                    } else { // Fallback por si usan el viejo formato
+                    } else {
                         abText = node.node("actionbar").getString("");
                         abEnabled = !abText.isEmpty();
                     }
@@ -77,7 +105,7 @@ public class AnnouncerCore {
                     Announcement.BossBarConfig bbConfig = new Announcement.BossBarConfig(bbEnabled, bbText, bbColor, bbStyle, bbDuration, bbDeplete);
 
                     if (lines != null) {
-                        announcementMap.put(key.toString(), new Announcement(servers, lines, sound, abConfig, bbConfig));
+                        announcementMap.put(key.toString(), new Announcement(servers, worlds, lines, sound, abConfig, bbConfig));
                     }
                 } catch (Exception e) { platform.getPluginLogger().warning("Error en anuncio: " + key); }
             });
@@ -108,8 +136,13 @@ public class AnnouncerCore {
 
         List<Audience> targets = new ArrayList<>();
         platform.getOnlinePlayers().forEach(player -> {
-            boolean isGlobal = ann.servers().stream().anyMatch(s -> s.equalsIgnoreCase("global"));
-            if (isGlobal || ann.servers().stream().anyMatch(srv -> srv.equalsIgnoreCase(platform.getServerName(player)))) {
+            boolean isGlobalServer = ann.servers().stream().anyMatch(s -> s.equalsIgnoreCase("global"));
+            boolean matchServer = isGlobalServer || ann.servers().stream().anyMatch(srv -> srv.equalsIgnoreCase(platform.getServerName(player)));
+
+            boolean isGlobalWorld = ann.worlds().stream().anyMatch(w -> w.equalsIgnoreCase("global"));
+            boolean matchWorld = isGlobalWorld || ann.worlds().stream().anyMatch(w -> w.equalsIgnoreCase(platform.getWorldName(player)));
+
+            if (matchServer && matchWorld) {
                 targets.add(player);
             }
         });
@@ -179,7 +212,6 @@ public class AnnouncerCore {
                         float remaining = 1.0f - ((float) elapsed / duration);
                         finalBossBar.progress(Math.max(0.0f, remaining));
                     }
-
                     if (elapsed == duration) {
                         targets.forEach(p -> p.hideBossBar(finalBossBar));
                     }
@@ -190,7 +222,7 @@ public class AnnouncerCore {
 
     public void executeCommand(Audience sender, String[] args) {
         if (args.length == 0) {
-            sender.sendMessage(parseMsg(lang.getOrDefault("help", "&6Usa /pa reload, list o test <anuncio>")));
+            sender.sendMessage(parseMsg(lang.getOrDefault("help", "&6Use /pa reload, list or test <id>")));
             return;
         }
 
@@ -198,27 +230,27 @@ public class AnnouncerCore {
             case "reload" -> {
                 loadConfig();
                 startTask();
-                sender.sendMessage(parseMsg(lang.getOrDefault("reload-success", "&a¡Config v2.1 cargada!")));
+                sender.sendMessage(parseMsg(lang.getOrDefault("reload-success", "&aConfig v2.2 loaded!")));
             }
             case "list" -> {
-                sender.sendMessage(parseMsg(lang.getOrDefault("list-header", "&6&lAnuncios en el sistema:")));
+                sender.sendMessage(parseMsg(lang.getOrDefault("list-header", "&6&lLoaded announcements:")));
                 announcementMap.forEach((id, ann) ->
-                        sender.sendMessage(parseMsg("&e» &f" + id + " &7(" + ann.servers() + ")"))
+                        sender.sendMessage(parseMsg("&e» &f" + id + " &7(Servers: " + ann.servers() + ") &b(Worlds: " + ann.worlds() + ")"))
                 );
             }
             case "test" -> {
                 if (args.length < 2) {
-                    sender.sendMessage(parseMsg("&cUso: /pa test <nombre_anuncio>"));
+                    sender.sendMessage(parseMsg("&cUsage: /pa test <id>"));
                     return;
                 }
                 Announcement ann = announcementMap.get(args[1]);
                 if (ann != null) {
                     broadcast(ann);
                 } else {
-                    sender.sendMessage(parseMsg(lang.getOrDefault("id-not-found", "&cEse anuncio no existe.")));
+                    sender.sendMessage(parseMsg(lang.getOrDefault("id-not-found", "&cThat announcement does not exist.")));
                 }
             }
-            default -> sender.sendMessage(parseMsg("&cComando desconocido."));
+            default -> sender.sendMessage(parseMsg("&cUnknown command."));
         }
     }
 

@@ -11,7 +11,12 @@ messages:
 
 announcements:
   discord:
+    # Use ["global"] to display on all servers, or specify like ["lobby", "survival"]
     servers: ["global"]
+    # [PAPER ONLY] Specify which worlds will see this. Ignored on Velocity.
+    # Use["global"] to display in all worlds. Example for specific worlds: ["world", "world_nether"]
+    worlds: ["global"]
+
     sound: "ENTITY_EXPERIENCE_ORB_PICKUP"
     actionbar:
       enabled: true
@@ -33,6 +38,7 @@ announcements:
 
   security:
     servers: ["global"]
+    worlds: ["global"]
     sound: ""
     actionbar:
       enabled: false
@@ -44,3 +50,4 @@ announcements:
       - "[center]<white>To keep your account safe, we recommend <color:#FFD6A5><bold>avoiding</bold></color>"
       - "[center]<white>the use of the same password across different servers."
       - "[center]<gray>» <white>Protect your progress by using unique passwords."
+      -

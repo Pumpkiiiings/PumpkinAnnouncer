@@ -4,6 +4,7 @@ import java.util.List;
 
 public record Announcement(
         List<String> servers,
+        List<String> worlds,
         List<String> lines,
         String sound,
         ActionBarConfig actionbar,

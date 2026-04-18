@@ -2,6 +2,7 @@ package pumpkin.anuncios.velocity;
 
 import com.google.inject.Inject;
 import com.velocitypowered.api.event.Subscribe;
+import com.velocitypowered.api.event.connection.PostLoginEvent;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
@@ -17,13 +18,14 @@ import java.util.Collection;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
-@Plugin(id = "pumpkinannouncer", name = "PumpkinAnnouncer", version = "2.1", authors = {"Pumpkingz"})
+@Plugin(id = "pumpkinannouncer", name = "PumpkinAnnouncer", version = "2.3", authors = {"Pumpkingz"})
 public class PumpkinVelocity implements PumpkinPlatform {
 
     private final ProxyServer server;
     private final Logger logger;
     private final Path dataDirectory;
     private ScheduledTask task;
+    private AnnouncerCore core;
 
     @Inject
     public PumpkinVelocity(ProxyServer server, Logger logger, @DataDirectory Path dataDir) {
@@ -34,11 +36,21 @@ public class PumpkinVelocity implements PumpkinPlatform {
 
     @Subscribe
     public void onInit(ProxyInitializeEvent event) {
-        AnnouncerCore core = new AnnouncerCore(this);
+        this.core = new AnnouncerCore(this);
         core.loadConfig();
         core.startTask();
         server.getCommandManager().register("pa", new VelocityCommand(core));
+
+        core.initUpdateChecker();
+
         logger.info("Cargado correctamente en modo Velocity.");
+    }
+
+    @Subscribe
+    public void onJoin(PostLoginEvent event) {
+        if (event.getPlayer().hasPermission("pumpkin.admin")) {
+            scheduleDelayedTask(() -> core.notifyUpdate(event.getPlayer()), 2);
+        }
     }
 
     @Override public Logger getPluginLogger() { return logger; }
@@ -64,6 +76,10 @@ public class PumpkinVelocity implements PumpkinPlatform {
         if (player instanceof Player p) {
             return p.getCurrentServer().map(s -> s.getServerInfo().getName()).orElse("global");
         }
+        return "global";
+    }
+
+    @Override public String getWorldName(Audience player) {
         return "global";
     }
 }

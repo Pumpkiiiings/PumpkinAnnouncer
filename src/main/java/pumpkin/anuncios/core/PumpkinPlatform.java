@@ -10,7 +10,8 @@ public interface PumpkinPlatform {
     Path getPluginDataDirectory();
     void cancelTask();
     void scheduleTask(Runnable task, int intervalSeconds);
-    void scheduleDelayedTask(Runnable task, int delaySeconds); // NUEVO
+    void scheduleDelayedTask(Runnable task, int delaySeconds);
     Collection<? extends Audience> getOnlinePlayers();
     String getServerName(Audience player);
+    String getWorldName(Audience player); // ¡NUEVO!
 }
