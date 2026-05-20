@@ -3,18 +3,20 @@ plugins {
     id 'com.github.johnrengelman.shadow' version '8.1.1'
 }
 
-group = 'pumpkin.anuncios'
-version = '2.3'
+group = 'pumpkin.announcement'
+version = '2.4'
 
 repositories {
     mavenCentral()
     maven { url = 'https://repo.papermc.io/repository/maven-public/' }
+    maven { url = 'https://repo.extendedclip.com/releases/' }
 }
 
 dependencies {
     compileOnly 'com.velocitypowered:velocity-api:3.3.0-SNAPSHOT'
     annotationProcessor 'com.velocitypowered:velocity-api:3.3.0-SNAPSHOT'
     compileOnly 'io.papermc.paper:paper-api:1.19.4-R0.1-SNAPSHOT'
+    compileOnly 'me.clip:placeholderapi:2.12.2'
     implementation 'org.spongepowered:configurate-yaml:4.1.2'
 }
 
@@ -30,8 +32,8 @@ tasks {
 
         // PRÁCTICA PRO: Reubicar librerías.
         // Si otro plugin usa un Configurate antiguo, el tuyo no se romperá ni causará errores.
-        relocate 'org.spongepowered.configurate', 'pumpkin.anuncios.libs.configurate'
-        relocate 'io.leangen.geantyref', 'pumpkin.anuncios.libs.geantyref'
+        relocate 'org.spongepowered.configurate', 'pumpkin.announcement.libs.configurate'
+        relocate 'io.leangen.geantyref', 'pumpkin.announcement.libs.geantyref'
     }
 }
 

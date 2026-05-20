@@ -1,0 +1,57 @@
+settings:
+  cooldown-seconds: 60
+
+messages:
+  help: "<gradient:gold:yellow><bold>PumpkinAnnouncer</bold></gradient>\n<gray>» <yellow>/pa reload <dark_gray>- <white>Reload configuration\n<gray>» <yellow>/pa list <dark_gray>- <white>View all IDs\n<gray>» <yellow>/pa test <id> <dark_gray>- <white>Preview an announcement"
+  reload-success: "<green>Reload successfully completed."
+  list-header: "<gold><bold>Loaded announcements:</bold></gold>"
+  id-not-found: "<red>That announcement ID does not exist. Please verify your configuration."
+
+# ─────────────────────────────────────────────
+#  servers: filters by backend server (name in velocity.toml)
+#  Use ["global"] to show on all servers.
+# ─────────────────────────────────────────────
+
+announcements:
+
+  discord:
+    servers: ["global"]
+    sound: "ENTITY_EXPERIENCE_ORB_PICKUP"
+
+    actionbar:
+      enabled: true
+      text: "<color:#A0C4FF><bold>Join our official Discord server!</bold></color>"
+      duration-seconds: 10
+
+    bossbar:
+      enabled: true
+      text: "OFFICIAL DISCORD"
+      color: "BLUE"        # PINK, BLUE, RED, GREEN, YELLOW, PURPLE, WHITE
+      style: "PROGRESS"    # PROGRESS, SEGMENTED_6, SEGMENTED_10, SEGMENTED_12, SEGMENTED_20
+      duration-seconds: 10
+      deplete: true
+      animated:
+        enabled: true
+        gradient-colors: ["#A0C4FF", "#BDB2FF", "#A0C4FF"]
+        frame-interval-ticks: 3
+
+    lines:
+      - "[center]<color:#A0C4FF><bold>DISCORD</bold>"
+      - ""
+      - "[center]<white>We invite you to join our official community."
+      - "[center]<white>Link: <click:open_url:'https://discord.gg/VVCnuympkD'><hover:show_text:'<gray>Click here to join our Discord server'><underlined><color:#A0C4FF>discord.gg/VVCnuympkD</color></underlined></hover></click>"
+      - "[center]<gray>» <white>Access support, stay updated, and participate in giveaways."
+
+  security:
+    servers: ["global"]
+    sound: ""
+    actionbar:
+      enabled: false
+    bossbar:
+      enabled: false
+    lines:
+      - "[center]<color:#FFADAD><bold>SECURITY NOTICE</bold>"
+      - ""
+      - "[center]<white>For your safety, we strongly recommend <color:#FFD6A5><bold>not reusing</bold></color>"
+      - "[center]<white>your passwords across different servers."
+      - "[center]<gray>» <white>Please protect your account by utilizing a unique password."

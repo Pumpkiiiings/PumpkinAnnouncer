@@ -1,0 +1,76 @@
+settings:
+  cooldown-seconds: 60
+
+messages:
+  help: "<gradient:gold:yellow><bold>PumpkinAnnouncer</bold></gradient>\n<gray>» <yellow>/pa reload <dark_gray>- <white>Reload config\n<gray>» <yellow>/pa list <dark_gray>- <white>View all IDs\n<gray>» <yellow>/pa test <id> <dark_gray>- <white>Preview an announcement"
+  reload-success: "<green>Reload complete! Everything is working correctly."
+  list-header: "<gold><bold>Loaded announcements:</bold></gold>"
+  id-not-found: "<red>That announcement ID does not exist. Check your config."
+
+# ─────────────────────────────────────────────
+#  Sounds: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Sound.html
+#  PlaceholderAPI: %placeholder% works in lines, title, subtitle, actionbar and bossbar text
+# ─────────────────────────────────────────────
+
+announcements:
+
+  discord:
+    # [PAPER ONLY] Worlds where it is shown. Use ["global"] for all.
+    worlds: ["global"]
+    sound: "ENTITY_EXPERIENCE_ORB_PICKUP"
+
+    lines:
+      - "[center]<color:#A0C4FF><bold>DISCORD</bold>"
+      - ""
+      - "[center]<white>Join our community!"
+      - "[center]<white>Link: <click:open_url:'your_link'><hover:show_text:'<gray>Click here to join!'><underlined><color:#A0C4FF>your_link</color></underlined></hover></click>"
+      - "[center]<gray>» <white>Giveaways, support, and daily updates."
+
+    actionbar:
+      enabled: true
+      text: "<color:#A0C4FF><bold>Join our official Discord!</bold></color>"
+      duration-seconds: 10
+
+    bossbar:
+      enabled: true
+      text: "OFFICIAL DISCORD"
+      color: "BLUE"        # PINK, BLUE, RED, GREEN, YELLOW, PURPLE, WHITE
+      style: "PROGRESS"    # PROGRESS, SEGMENTED_6, SEGMENTED_10, SEGMENTED_12, SEGMENTED_20
+      duration-seconds: 10
+      deplete: true
+      animated:
+        enabled: true
+        gradient-colors: ["#A0C4FF", "#BDB2FF", "#A0C4FF"]
+        frame-interval-ticks: 3
+
+    title:
+      enabled: true
+      title: "DISCORD"
+      subtitle: "<gray>Join the community!"
+      fade-in-ticks: 10
+      stay-ticks: 60
+      fade-out-ticks: 10
+      animated:
+        enabled: true
+        gradient-colors: ["#A0C4FF", "#BDB2FF", "#FFDAC1", "#A0C4FF"]
+        frame-interval-ticks: 3
+
+  security:
+    worlds: ["global"]
+    sound: ""
+
+    lines:
+      - "[center]<color:#FFADAD><bold>SECURITY TIP</bold>"
+      - ""
+      - "[center]<white>To keep your account secure, we recommend <color:#FFD6A5><bold>avoiding</bold></color>"
+      - "[center]<white>using the same password on different servers."
+      - "[center]<gray>» <white>Protect your progress with unique passwords."
+
+    actionbar:
+      enabled: false
+
+    bossbar:
+      enabled: false
+
+    title:
+      enabled: false
