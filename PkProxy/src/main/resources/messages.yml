@@ -1,0 +1,73 @@
+# ==========================================================
+# PkProxy - Mensajes
+# ==========================================================
+
+prefix: "<#FF9500>PkProxy <#5C6370>»"
+
+# General
+no-permission: "<#E06C75>No tienes los permisos necesarios para ejecutar esto."
+reload-success: "{prefix} <#98C379>¡Configuración recargada con éxito!"
+
+# Msg Command
+msg-usage: "{prefix} <#E06C75>Uso: /msg <jugador> <mensaje>"
+ignore-usage: "{prefix} <#E06C75>Uso correcto: /ignore <jugador>"
+reply-usage: "{prefix} <#E06C75>Uso: /reply <mensaje>"
+no-reply-target: "{prefix} <#E06C75>No tienes a nadie a quien responder."
+player-offline: "{prefix} <#E06C75>Ese jugador está desconectado o no se encuentra en la red."
+cannot-msg-self: "{prefix} <#E06C75>No puedes enviarte mensajes a ti mismo."
+cannot-ignore-self: "{prefix} <#E06C75>No puedes ignorarte a ti mismo."
+cannot-reply-self: "{prefix} <#E06C75>Error: Objetivo inválido para responder."
+sender-toggled-off: "{prefix} <#E06C75>Tienes los mensajes privados desactivados."
+target-toggled-off: "{prefix} <#D19A66>El destinatario tiene los mensajes privados desactivados."
+player-ignoring-you: "{prefix} <#E06C75>No puedes contactar a este usuario."
+ignored-player: "{prefix} <#98C379>Ahora estás ignorando a <#61AFEF><target><#98C379>."
+unignored-player: "{prefix} <#E5C07B>Has dejado de ignorar a <#61AFEF><target><#E5C07B>."
+toggle-on: "{prefix} <#98C379>Mensajes privados activados."
+toggle-off: "{prefix} <#E06C75>Mensajes privados desactivados."
+
+# Formatos Msg
+msg-sender: "<#ABB2BF>[<#FF9500>Yo <#5C6370>-> <#61AFEF><target><#ABB2BF>] <white><message>"
+msg-receiver: "<#ABB2BF>[<#61AFEF><sender> <#5C6370>-> <#FF9500>Yo<#ABB2BF>] <white><message>"
+msg-spy: "<#C678DD>[Spy] <#61AFEF><sender> <#5C6370>-> <#61AFEF><target><#5C6370>: <#D19A66><message>"
+
+# Spy
+spy-enabled: "<#C678DD>[Staff Spy] <#5C6370>» <#98C379>Modo global activado."
+spy-disabled: "<#C678DD>[Staff Spy] <#5C6370>» <#E06C75>Modo global desactivado."
+
+# StaffChat (SC, AC, DC)
+sc-enabled: "{prefix} <#98C379>Has entrado al chat del Staff."
+sc-disabled: "{prefix} <#E06C75>Has salido del chat del Staff."
+sc-usage: "{prefix} <#E06C75>Uso: /sc [mensaje]"
+
+ac-enabled: "{prefix} <#98C379>Has entrado al chat de Administración."
+ac-disabled: "{prefix} <#E06C75>Has salido del chat de Administración."
+ac-usage: "{prefix} <#E06C75>Uso: /ac [mensaje]"
+
+dc-enabled: "{prefix} <#98C379>Has entrado al chat de Desarrollo."
+dc-disabled: "{prefix} <#E06C75>Has salido del chat de Desarrollo."
+dc-usage: "{prefix} <#E06C75>Uso: /dc [mensaje]"
+
+# Alert
+alert-format: "<dark_red><bold>[ALERTA]</bold> <red><message>"
+alert-usage: "{prefix} <#E06C75>Uso: /alert <mensaje>"
+alert-sound: "entity.experience_orb.pickup"
+
+# Lobby
+already-in-lobby: "{prefix} <#E06C75>Ya te encuentras conectado al lobby."
+lobby-not-found: "{prefix} <#E06C75>El servidor lobby no se encuentra disponible actualmente."
+connecting-lobby: "{prefix} <#98C379>Conectando al lobby..."
+
+# Ping
+ping-message: "{prefix} <gray>Tu ping actual es de <green><ping>ms<gray>."
+ping-other: "{prefix} <gray>El ping de <yellow><player> <gray>es de <green><ping>ms<gray>."
+
+# Info
+info-usage: "{prefix} <#E06C75>Uso: /info <jugador>"
+info-format:
+  - "<dark_gray>============================="
+  - "<gold><bold>INFO DEL JUGADOR: <yellow><player>"
+  - ""
+  - "<gray>» <white>Ping: <green><ping>ms"
+  - "<gray>» <white>Servidor actual: <aqua><server>"
+  - "<gray>» <white>Versión: <light_purple><version>"
+  - "<dark_gray>============================="

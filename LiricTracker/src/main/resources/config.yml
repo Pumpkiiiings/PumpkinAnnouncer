@@ -1,0 +1,10 @@
+database:
+host: 127.0.0.1
+port: 3306
+name: network_tracker
+user: root
+password: password123
+
+settings:
+metrics_interval_minutes: 5
+track_player_logins: true
